@@ -1,0 +1,6 @@
+name: DonorReclaim
+version: 0.1
+main: main.java.me.avastprods.donorreclaim.Main
+commands:
+  reclaim:
+    description: DonorReclaim main command
