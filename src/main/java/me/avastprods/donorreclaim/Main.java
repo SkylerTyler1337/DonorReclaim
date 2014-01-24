@@ -16,7 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.gmail.nossr50.mcMMO;
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.datatypes.skills.SkillType;
-import com.sky8the2flies.util.SettingsManager;
+import com.sky8the2flies.signenchant.util.Tokens;
 
 public class Main extends JavaPlugin {
 
@@ -51,7 +51,7 @@ public class Main extends JavaPlugin {
 				if (args[0].equalsIgnoreCase("god")) {
 					if (sender instanceof Player) {
 						PlayerFile dataStorage = new PlayerFile(this, sender.getName());
-						SettingsManager settingsManager = new SettingsManager();
+						Tokens settingsManager = new Tokens();
 
 						if (dataStorage.exists()) {
 							double money = dataStorage.getConfig().getDouble("vault.money");
@@ -107,7 +107,7 @@ public class Main extends JavaPlugin {
 
 	public void saveData(String name) {
 		PlayerFile dataStorage = new PlayerFile(this, name);
-		SettingsManager settingsManager = new SettingsManager();
+		Tokens settingsManager = new Tokens();
 
 		double money = p3.getBalance(name);
 		int tokens = settingsManager.getTokens().getInt(name + ".tokens");
