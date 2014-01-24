@@ -16,6 +16,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.gmail.nossr50.mcMMO;
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.datatypes.skills.SkillType;
+import com.sky8the2flies.signenchant.SignEnchant;
 import com.sky8the2flies.signenchant.TokensAPI;
 import com.sky8the2flies.signenchant.util.Tokens;
 public class Main extends JavaPlugin {
@@ -113,7 +114,8 @@ public class Main extends JavaPlugin {
 
 		dataStorage.getConfig().set("vault.money", money);
 		dataStorage.getConfig().set("senchant.tokens", tokens);
-
+		SignEnchant.settings.saveTokens();
+		
 		for (SkillType skill : SkillType.values()) {
 			dataStorage.getConfig().set("mcmmo.skill." + skill.getSkillName() + ".level", ExperienceAPI.getLevel(Bukkit.getPlayer(name), skill.getSkillName()));
 			dataStorage.getConfig().set("mcmmo.skill." + skill.getSkillName() + ".xp", ExperienceAPI.getXP(Bukkit.getPlayer(name), skill.getSkillName()));
