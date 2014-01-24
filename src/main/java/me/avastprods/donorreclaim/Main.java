@@ -52,8 +52,6 @@ public class Main extends JavaPlugin {
 				if (args[0].equalsIgnoreCase("god")) {
 					if (sender instanceof Player) {
 						PlayerFile dataStorage = new PlayerFile(this, sender.getName());
-						TokensAPI settingsManager = new TokensAPI();
-						Tokens settingsM2 = new Tokens();
 
 						if (dataStorage.exists()) {
 							double money = dataStorage.getConfig().getDouble("vault.money");
@@ -71,9 +69,9 @@ public class Main extends JavaPlugin {
 
 							p3.depositPlayer(sender.getName(), money);
 
-							settingsManager.getTokens(pname).set(pname + ".tokens", tokens);
-							settingsM2.saveTokens();
-
+							TokensAPI.getTokens(pname);
+							Tokens.getInstance().saveTokens();
+							
 							for (SkillType skill : SkillType.values()) {
 								ExperienceAPI.setLevel((Player) sender, skill.getSkillName(), level.get(skill));
 								ExperienceAPI.setXP((Player) sender, skill.getSkillName(), xp.get(skill));
@@ -109,10 +107,9 @@ public class Main extends JavaPlugin {
 
 	public void saveData(String name) {
 		PlayerFile dataStorage = new PlayerFile(this, name);
-		TokensAPI settingsManager = new TokensAPI();
 
 		double money = p3.getBalance(name);
-		int tokens = settingsManager.getTokens().getInt(name + ".tokens");
+		int tokens = TokensAPI.getTokens(name);
 
 		dataStorage.getConfig().set("vault.money", money);
 		dataStorage.getConfig().set("senchant.tokens", tokens);
