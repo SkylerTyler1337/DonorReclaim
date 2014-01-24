@@ -16,8 +16,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.gmail.nossr50.mcMMO;
 import com.gmail.nossr50.api.ExperienceAPI;
 import com.gmail.nossr50.datatypes.skills.SkillType;
+import com.sky8the2flies.signenchant.TokensAPI;
 import com.sky8the2flies.signenchant.util.Tokens;
-
 public class Main extends JavaPlugin {
 
 	mcMMO p2 = null;
@@ -42,6 +42,7 @@ public class Main extends JavaPlugin {
 	}
 
 	public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+		String pname = sender.getName();
 		if (cmd.getName().equalsIgnoreCase("reclaim")) {
 			if (args.length == 0) {
 				sender.sendMessage("Syntax: /reclaim god");
@@ -51,7 +52,8 @@ public class Main extends JavaPlugin {
 				if (args[0].equalsIgnoreCase("god")) {
 					if (sender instanceof Player) {
 						PlayerFile dataStorage = new PlayerFile(this, sender.getName());
-						Tokens settingsManager = new Tokens();
+						TokensAPI settingsManager = new TokensAPI();
+						Tokens settingsM2 = new Tokens();
 
 						if (dataStorage.exists()) {
 							double money = dataStorage.getConfig().getDouble("vault.money");
@@ -69,8 +71,8 @@ public class Main extends JavaPlugin {
 
 							p3.depositPlayer(sender.getName(), money);
 
-							settingsManager.getTokens().set(sender.getName() + ".tokens", tokens);
-							settingsManager.saveTokens();
+							settingsManager.getTokens(pname).set(pname + ".tokens", tokens);
+							settingsM2.saveTokens();
 
 							for (SkillType skill : SkillType.values()) {
 								ExperienceAPI.setLevel((Player) sender, skill.getSkillName(), level.get(skill));
@@ -107,7 +109,7 @@ public class Main extends JavaPlugin {
 
 	public void saveData(String name) {
 		PlayerFile dataStorage = new PlayerFile(this, name);
-		Tokens settingsManager = new Tokens();
+		TokensAPI settingsManager = new TokensAPI();
 
 		double money = p3.getBalance(name);
 		int tokens = settingsManager.getTokens().getInt(name + ".tokens");
